@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Score Analyzer</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #fff0f5;
+      text-align: center;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      color: #d63384;
+    }
+
+    h1 {
+      color: #ff69b4;
+    }
+
+    .subject {
+      margin: 20px auto;
+    }
+
+    .score {
+      font-size: 1.5rem;
+      color: #ff69b4;
+    }
+
+    .instructions {
+      display: none;
+      color: #b03060;
+      font-style: italic;
+    }
+
+    .img-card {
+      height: 150px;
+      width: 150px;
+      object-fit: cover;
+      border: 3px solid #ffb6c1;
+      margin-bottom: 10px;
+    }
+
+    .btn-pink {
+      background-color: #ff69b4;
+      border: none;
+      color: white;
+    }
+
+    .btn-pink:hover {
+      background-color: #ff1493;
+    }
+
+    input[type="number"] {
+      border: 2px solid #ffb6c1;
+      border-radius: 5px;
+      padding: 5px;
+    }
+
+    footer a {
+      color: #d63384;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Score Analyzer</h1>
+
+  <p>
+    <input type="checkbox" onclick="toggleInstructions()"> Click Me
+  </p>
+  <p id="instructions" class="instructions">Enter your grades in the following subjects.</p>
+
+  <div class="container">
+    <div class="row justify-content-center">
+
+      <div class="col-md-4 subject">
+        <img src="https://media.discordapp.net/attachments/1045336816540205149/1367532331300032603/Screen_Shot_2025-05-02_at_12.02.57_AM.png?ex=6814ed3b&is=68139bbb&hm=5e4b312c43c3bbe35aed6f4b6f30bfce40e3611f8e10dd4123dce911fa4b78a7&=&format=webp&quality=lossless&width=1014&height=1176" class="img-card rounded" alt="English">
+        <p>English: <input type="number" id="english" min="0" max="100"></p>
+      </div>
+
+      <div class="col-md-4 subject">
+        <img src="https://media.discordapp.net/attachments/1045336816540205149/1367532331685904525/Screen_Shot_2025-05-02_at_12.03.38_AM.png?ex=6814ed3b&is=68139bbb&hm=59e9a7b5e26114ce3a1809dc03fee2d8053b3de256d8924a02944b326dc815de&=&format=webp&quality=lossless&width=1024&height=1176" class="img-card rounded" alt="Math">
+        <p>Math: <input type="number" id="math" min="0" max="100"></p>
+      </div>
+
+      <div class="col-md-4 subject">
+        <img src="https://cdn.discordapp.com/attachments/1045336816540205149/1367532330838786218/Screen_Shot_2025-05-02_at_12.04.05_AM.png?ex=6814ed3b&is=68139bbb&hm=c7e49c02a4c29496b704e119a0032f67abc98259818894d336d1e50799e25459&=&format=webp&quality=lossless&width=1020&height=1176" class="img-card rounded" alt="Social Studies">
+        <p>Social Studies: <input type="number" id="socstud" min="0" max="100"></p>
+      </div>
+
+    </div>
+  </div>
+
+  <button class="btn btn-pink mt-4" onclick="getRating()">Get Rating</button>
+
+  <script>
+    function toggleInstructions() {
+      const instructions = document.getElementById("instructions");
+      instructions.style.display = instructions.style.display === "none" ? "block" : "none";
+    }
+
+    function getRating() {
+      let english = parseFloat(document.getElementById("english").value);
+      let math = parseFloat(document.getElementById("math").value);
+      let socstud = parseFloat(document.getElementById("socstud").value);
+
+      if (isNaN(english) || isNaN(math) || isNaN(socstud)) {
+        alert("Please enter all grades.");
+        return;
+      }
+
+      let average = (english + math + socstud) / 3;
+
+      let rating;
+      switch (true) {
+        case (average >= 94 && average <= 100):
+          rating = "Excellent";
+          break;
+        case (average >= 87 && average < 94):
+          rating = "Above Satisfactory";
+          break;
+        case (average >= 80 && average < 87):
+          rating = "Satisfactory";
+          break;
+        case (average >= 75 && average < 80):
+          rating = "Needs Improvement";
+          break;
+        case (average >= 70 && average < 75):
+          rating = "Poor";
+          break;
+        default:
+          rating = "Invalid Input";
+      }
+
+      alert(`Your average is ${average.toFixed(2)} - ${rating}`);
+    }
+  </script>
+
+  <footer class="mt-5">
+    <p>Source: <a href="https://obmfairviewsis.orangeapps.ph/ob/elearning/grades" target="_blank">OBMC Grade Ratings</a></p>
+  </footer>
+
+</body>
+</html>
